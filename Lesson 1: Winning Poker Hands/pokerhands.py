@@ -4,7 +4,7 @@ def poker(hands):
 
 def hand_rank(hand):
     """
-    * Nice different kinds of kinds
+    * Nine different kinds of kinds
     * Rankings:
         * Straight flush jack high: (rank=8, high card=11)
         * Four Aces, Queen Kicker: (rank=7, fk = 14, kicker = 12)
@@ -58,7 +58,14 @@ def hand_rank(hand):
         return (0, hand)
 
 
-
+def card_ranks(cards):
+    "Return a list of the ranks, sorted with higher first."
+    # using list comprehension:
+    
+    # ranks = [r for r, s in cards]
+    ranks = ['--23456789TJQKA'.index(r) for r, s in hand]
+    ranks.sort(reverse=True)
+    return ranks
 
 def test():
     """Test cases for the functions in poker program"""
