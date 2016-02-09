@@ -15,6 +15,10 @@ def test():
     fh = "TD TC TH 7C 7D".split()
 
     assert poker([sf, fk, fh]) == sf
-    reeturn "tests pass"
+    assert poker([fk, fh]) == fk
+    assert poker([fh, fh]) == fh
+    assert poker([sf]) == sf
+    assert poker([sf] + 99*[fh]) == sf
+    return "tests pass"
 
 print (test())
