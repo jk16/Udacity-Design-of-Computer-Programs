@@ -65,7 +65,7 @@ def card_ranks(cards):
     # ranks = [r for r, s in cards]
     ranks = ['--23456789TJQKA'.index(r) for r, s in hand]
     ranks.sort(reverse=True)
-    return ranks
+    return [5,4,3,2,1] if (ranks == [14,5,4,3,2]) else ranks
 
 def straight(ranks):
     "Return true if the ordered ranks form a 5-card straight."
