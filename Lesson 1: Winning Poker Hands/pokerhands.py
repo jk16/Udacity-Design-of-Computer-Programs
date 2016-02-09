@@ -115,7 +115,13 @@ def test():
     fk = "9D 9H 9S 9C 7D".split()
     fh = "TD TC TH 7C 7D".split()
     tp = "5S 5D 9H 6S".split()
-
+    #Only hand were Ace is a low card
+    #Program counts A-->14 not a one, so it wont find this hand
+    s1 = "AS 2S 3S 4S 5C".split()
+    s2 = "2C 3C 4C 5S 6S".split()
+    ah = "AS 2S 3S 4S 6C".split()
+    sh = "2S 3S 4S 6C 7D".split()
+    assert poker([s1, s2, ah, sh]) == s2
     fk_ranks = card_ranks(fk)
     tp_ranks = card_ranks(tp)
     #test kind function
