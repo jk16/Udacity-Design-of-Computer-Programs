@@ -30,11 +30,34 @@ def hand_rank(hand):
         four_kind = kind(4, ranks)
         kicker = kind(1, ranks)
         return (rank, four_kind, kicker)
+    elif kind(3, ranks) and kind(2, ranks):
+        rank = 6
+        three = kind(3, ranks)
+        double = kind(2, ranks)
+        return (rank, three, double)
+    elif flush(hand):
+        rank = 5
+        return (rank, hand)
+    elif straight(ranks):
+        rank = 4
+        hi = max(ranks)
+        return (rank, hi)
+    elif kind(3, ranks):
+        rank = 3
+        three = kind(3, ranks)
+        return (rank, three, hand_rank)
+    elif two_pair(ranks):
+        rank = 2
+        p = two_pair(ranks)
+        return (rank, p, hand)
+    elif kind(2, ranks):
+        rank = 1
+        d = kind(2, ranks)
+        return (rank, d, ranks)
+    else:
+        return (0, hand)
 
 
-
-
-    return ???
 
 
 def test():
@@ -54,7 +77,7 @@ def test():
     #Test ranking of hands
     assert hand_rank(sf) == (8, 10)
     assert hand_rank(fk) == (7, 9, 7)
-    assert hand_rank(fh) == (6, 10, 7)
+    assert hand_rank(fh) == (6, 10, 7 )
     return "tests pass"
 
 print (test())
