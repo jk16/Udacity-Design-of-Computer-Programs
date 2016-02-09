@@ -81,6 +81,31 @@ def flush(hand):
     all_suits_are_same = len(set(suits)) == 1
     return all_suits_are_same
 
+def kind(n, ranks):
+    """
+    Return the first rank that this hand has exactly n of.
+    Return None if there is no n-of-a-kind in the hand.
+    """
+
+    #go through the ranks
+    for r in ranks:
+        #check to see if the ranks has a count of exactly n of them
+        has_n_of_them = ranks.count(r) == n
+        if has_n_of_them:
+            return r
+    return None
+
+def two_pair(ranks):
+    """
+    If there are two pair, return the two ranks as a tuple:
+    (hi, lo) , else: return None.
+    """
+    pair = set([kind(2, ranks) , kind(2, list(reversed(ranks)))])
+    if len(pair) == 2:
+        pair = list(pair)
+        return (pair[0],pair[1])
+    else:
+        return None
 
 def test():
     """Test cases for the functions in poker program"""
@@ -89,6 +114,18 @@ def test():
     sf = "6C 7C 8C 9C TC".split()
     fk = "9D 9H 9S 9C 7D".split()
     fh = "TD TC TH 7C 7D".split()
+    tp = "5S 5D 9H 6S".split()
+
+    fk_ranks = card_ranks(fk)
+    tp_ranks = card_ranks(tp)
+    #test kind function
+    assert (kind, fk_ranks) == 9
+    assert kind(3, fk_ranks) == None
+    assert kind(2, fk_ranks) == None
+    assert kind(1, fk_ranks) == 7
+    #test two_pair
+    assert two_pair(fk_ranks) == None
+    assert two_pair(tp_ranks) == (9,5)
     #test straight function
     assert straight([9,8,7,6,5]) == True
     assert straight([9,8,8,6,5]) == False
