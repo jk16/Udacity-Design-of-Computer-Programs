@@ -40,4 +40,12 @@ def zebra_puzzle():
             if nextto(Chesterfields, fox)
             if nextto(Kools, horse)
             )
-print (zebra_puzzle())
+import time
+
+def timedcall(fn, *args):
+    t0 = time.clock()
+    fn()
+    res = fn(*args)
+    t1 = time.clock()
+    return t1-t0, res
+print (timedcall(zebra_puzzle))
