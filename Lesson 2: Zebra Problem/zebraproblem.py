@@ -20,9 +20,11 @@ def zebra_puzzle():
     houses = first, _, middle, _ , _ = [1,2,3,4,5]
     orderings = list(itertools.permutations(houses))
     return next((WATER, ZEBRA)
-            for (red, green, ivory, yellow, blue) in orderings
+            # for (red, green, ivory, yellow, blue) in orderings
+            for (red, green, ivory, yellow, blue) in c(orderings)
             if imright(green, ivory)
-            for (Englishman, Spaniard, Ukranian, Japanese, Norwegian) in orderings
+            # for (Englishman, Spaniard, Ukranian, Japanese, Norwegian) in orderings
+            for (red, green, ivory, yellow, blue) in c(orderings)
             if Englishman is red
             if Norwegian is first
             if nextto(Norwegian, blue)
@@ -30,7 +32,8 @@ def zebra_puzzle():
             if coffee is green
             if Ukranian is tea
             if milk is middle
-            for (OldGold, Kools, Chesterfields, LuckyStrike, Parliaments) in orderings
+            # for (OldGold, Kools, Chesterfields, LuckyStrike, Parliaments) in orderings
+            for (red, green, ivory, yellow, blue) in c(orderings)
             if Kools is yellow
             if LuckyStrike is oj
             if Japanese is Parliaments
@@ -40,6 +43,12 @@ def zebra_puzzle():
             if nextto(Chesterfields, fox)
             if nextto(Kools, horse)
             )
+
+def instrument_fn(fn,*args):
+    c.starts, c.items = 0,0
+    result = fn(*args)
+    print ("%s got %s with %5d iters over %7d items" % (fn.__name__, result, c.starts, c.items))
+
 import time
 
 def timedcall(fn, *args):
@@ -50,17 +59,24 @@ def timedcall(fn, *args):
     return t1-t0, res
 
 def timedcalls(n, fn, *args):
-    "Call fuction n times with args, return min, avg, and max time"
-    #build list of timed calls, discard results/keep time
-    times = [timedcall(fn, *args)[0] for _ in range(n)]
-    return times
-    # return min(times), average(times), max(times)
+    """Call fn(*args) repeatedly: if n is int do it n times, 
+                                  if its a float do it up to n seconds
+                                  return: min/avg/max times
+    """
+    n_is_int = isinstance(n, int)
+    if n_is_int:
+        times = [timedcall(fn, *args)[0] for _ in range(n)]
+    else:
+        times = []
+        while sum(times)<n:
+            times.append(timedcall(fn, *args)[0])
+    return min(times), average(times), max(times)
 
 def average(n):
     return sum(n)/float(len(n))
 
 
-print(timedcalls(3,zebra_puzzle))
+print(timedcalls(3.5,zebra_puzzle) )
 
 
 
