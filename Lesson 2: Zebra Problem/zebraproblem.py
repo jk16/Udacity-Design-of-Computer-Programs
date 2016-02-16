@@ -48,4 +48,24 @@ def timedcall(fn, *args):
     res = fn(*args)
     t1 = time.clock()
     return t1-t0, res
-print (timedcall(zebra_puzzle))
+
+def timedcalls(n, fn, *args):
+    "Call fuction n times with args, return min, avg, and max time"
+    #build list of timed calls, discard results/keep time
+    times = [timedcall(fn, *args)[0] for _ in range(n)]
+    return times
+    # return min(times), average(times), max(times)
+
+def average(n):
+    return sum(n)/float(len(n))
+
+
+print(timedcalls(3,zebra_puzzle))
+
+
+
+
+
+
+
+
