@@ -49,6 +49,16 @@ def instrument_fn(fn,*args):
     result = fn(*args)
     print ("%s got %s with %5d iters over %7d items" % (fn.__name__, result, c.starts, c.items))
 
+def c(sequence):
+    """ Generate items in a sequence; keeping count as we go.
+        c.starts --> keeps counts as we go
+        c.items --> number of items generated
+    """
+    c.starts += 1
+    for item in sequence:
+        c.items += 1
+        yield item
+        
 import time
 
 def timedcall(fn, *args):
